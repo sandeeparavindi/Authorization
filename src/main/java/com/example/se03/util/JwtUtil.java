@@ -29,7 +29,7 @@ public class JwtUtil implements Serializable {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
-    public Claims getClaimFromToken(String token){
+    public Claims getUserRolesCodeFromtoken(String token){
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
     }
 
