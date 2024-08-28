@@ -24,7 +24,8 @@ public class AuthController {
     private final ResponseDTO responseDTO;
 
     //constructor injection
-    public AuthController(JwtUtil jwtUtil, AuthenticationManager authenticationManager, UserServiceImpl userService,ResponseDTO responseDTO) {
+    public AuthController(JwtUtil jwtUtil, AuthenticationManager authenticationManager,
+                          UserServiceImpl userService,ResponseDTO responseDTO) {
         this.jwtUtil = jwtUtil;
         this.authenticationManager = authenticationManager;
         this.userService = userService;
@@ -44,13 +45,15 @@ public class AuthController {
         UserDTO loadedUser = userService.loadUserDetailsByUsername(userDTO.getEmail());
         if (loadedUser == null) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(new ResponseDTO(VarList.Conflict, "Authorization Failure! Please Try Again", null));
+                    .body(new ResponseDTO(VarList.Conflict,
+                            "Authorization Failure! Please Try Again", null));
         }
 
         String token = jwtUtil.genarateToken(loadedUser);
         if (token == null || token.isEmpty()) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(new ResponseDTO(VarList.Conflict, "Authorization Failure! Please Try Again", null));
+                    .body(new ResponseDTO(VarList.Conflict,
+                            "Authorization Failure! Please Try Again", null));
         }
 
         AuthDTO authDTO = new AuthDTO();
